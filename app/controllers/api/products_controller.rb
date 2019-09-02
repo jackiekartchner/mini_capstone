@@ -39,4 +39,5 @@ class Api::ProductsController < ApplicationController
     @product.destroy
     render json: {message: "Product was successfully destroyed!"}
   end
+
 end
