@@ -6,7 +6,7 @@
   total: @product.total,
   image_url: @product.image_url,
   description: @product.description,
-  discounted: @product.is_discounted?,
+  is_discounted?: @product.is_discounted?,
   inventory_status: @product.inventory_status,
   formatted: {
     price: number_to_currency(@product.price),

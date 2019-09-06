@@ -2,6 +2,22 @@ class Api::ProductsController < ApplicationController
 
   def index
     @products = Product.all
+
+    if params[:search]
+      @products = @products.where("name iLike ?", "%#{params[:search]}%")
+    end
+
+    if params[:discount]
+      @products = @products.where("price < ?", 100)
+    end
+
+    if params[:sort] == "price" && params[:sort_order] == "asc"
+      @products = @products.order(:price)
+    elsif params[:sort_order] == "price" && params[:sort_order] == "desc"
+      @products = @products.order(price: :desc)
+    else
+      @products = @products.order(:id)
+    end
     render 'index.json.jb'
   end
 
@@ -16,22 +32,31 @@ class Api::ProductsController < ApplicationController
         name: params[:name],
         price: params[:price].to_i,
         image_url: params[:image_url],
-        description: params[:description]
+        description: params[:description],
+        inventory_status: params[:inventory_status]
       )
-    @product.save
-    render 'create.json.jb'
+    if @product.save
+      render 'show.json.jb'
+    else
+      render json: {errors: @product.errors.full_messages},
+      status: :unprocessable_entity
+    end
   end
 
   def update
-    @product = Product.find_by(id: params[:id])
-
-    @product.name = params[:name] || @product.name
-    @product.price = params[:price] || @product.price
-    @product.image_url = params[:image_url] || @product.image_url
-    @product.description = params[:description] || @product.description
-
-    @product.save
-    render 'show.json.jb'
+    @product = Product.new(
+    name: params[:name] || @product.name,
+    price: params[:price] || @product.price,
+    image_url: params[:image_url] || @product.image_url,
+    description: params[:description] || @product.description,
+    inventory_status: params[:inventory_status] || @product.inventory_status
+    )
+    if @product.save
+      render 'show.json.jb'
+    else
+      render json: {errors: @product.errors.full_messages},
+      status: :unprocessable_entity
+    end
   end
 
   def destroy
