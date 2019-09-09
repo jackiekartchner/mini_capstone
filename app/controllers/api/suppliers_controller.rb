@@ -19,7 +19,7 @@ class Api::SuppliersController < ApplicationController
 
   def create
     @supplier = Supplier.new(
-        name: params[:ame],
+        name: params[:name],
         email: params[:email],
         phone_number: params[:phone_number],
       )
