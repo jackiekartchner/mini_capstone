@@ -1,5 +1,7 @@
 class Api::ProductsController < ApplicationController
 
+  before_action :authenticate_admin, except: [:index, :show]
+
   def index
     @products = Product.all
 
@@ -27,14 +29,23 @@ class Api::ProductsController < ApplicationController
   end
 
   def create
+
     @product = Product.new(
         id: params[:id],
         name: params[:name],
         price: params[:price].to_i,
-        image_url: params[:image_url],
+        images: params[:images],
         description: params[:description],
         inventory_status: params[:inventory_status]
       )
+
+    product = Product.find_by(id: params[:product_id])
+
+    calculated_subtotal = product.price * params[:quantity].to_i
+
+    calculated_tax = calculated_subtotal * 0.09
+
+    calculated_total = calculated_subtotal + calculated_tax
     if @product.save
       render 'show.json.jb'
     else
@@ -44,13 +55,12 @@ class Api::ProductsController < ApplicationController
   end
 
   def update
-    @product = Product.new(
-    name: params[:name] || @product.name,
-    price: params[:price] || @product.price,
-    image_url: params[:image_url] || @product.image_url,
-    description: params[:description] || @product.description,
-    inventory_status: params[:inventory_status] || @product.inventory_status
-    )
+    @product = Product.find(params[:id])
+    
+    @product.name = params[:name] || @product.name
+    @product.price = params[:price] || @product.price
+    @product.description = params[:description] || @product.description
+    
     if @product.save
       render 'show.json.jb'
     else

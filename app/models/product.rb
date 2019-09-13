@@ -15,6 +15,17 @@ class Product < ApplicationRecord
   #   Image.where(product_id: id)
   # end
 
+  has_many :orders
+
+  has_many :product_categories
+  has_many :categories, through: :product_categories
+  has_many :carted_products
+  has_many :orders, through: :carted_products
+
+  def cateogry_names
+    categories.map { |category| category.name }
+  end
+  
   def is_discounted?
     price <= 10
   end

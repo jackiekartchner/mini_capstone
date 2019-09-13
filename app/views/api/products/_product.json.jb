@@ -1,16 +1,14 @@
 {
   id: product.id,
   name: product.name,
-  price: product.price,
-  image_url: product.image_url,
+  images: product.images,
   description: product.description,
   is_discounted?: product.is_discounted?,
   inventory_status: product.inventory_status,
   supplier_name: product.supplier.name,
+  price: number_to_currency(product.price),
+  tax: number_to_currency(product.tax),
+  total: number_to_currency(product.total),
   logged_in_user: current_user,
-  formatted: {
-    price: number_to_currency(product.price),
-    tax: number_to_currency(product.tax),
-    total: number_to_currency(product.total)
+  category: product.category_names
   }
-}

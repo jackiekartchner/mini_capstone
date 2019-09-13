@@ -53,3 +53,4 @@ Image.create(url: "https://n.nordstrommedia.com/id/sr3/54ae9f03-d305-45ab-b082-c
 Image.create(url: "http://www.jewelryweb.com/main/ws3017502.jpg", product_id: 6)
 Image.create(url: "https://pixel.nymag.com/imgs/daily/strategist/2017/08/10/silk-pillows/Lifetime-warranty_real.w710.h473.2x.jpg", product_id: 9)
 
+
