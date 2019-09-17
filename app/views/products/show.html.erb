@@ -1,0 +1,5 @@
+<h2><%= @product.name %></h2>
+  <h3>Category: <%= @product.cateogry_names %></h3>
+  <h4> Retail Price: <%= number_to_currency(@product.price) %></h4>
+  <p> Description: <%= @product.description %></p>
+  <a href="/products">All Products</a>
