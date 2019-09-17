@@ -1,14 +1,15 @@
-<h1>New Product</h1>
+<h1>Update Product</h1>
 
-<form action="/products" method="post">
+<form action="/products/<%= @product.id %>" method="patch">
+  <input type="hidden" name="_method" value="patch">
   <div>
-    Name: <input type="string" name="name">
+    Name: <input type="string" name="name" value="<%= @product.name %>">
   </div>
    <div>
-    Retail Price: <input type="decimal" name="price">
+    Retail Price: <input type="decimal" name="price" value="<%= @product.price %>">
   </div>
    <div>
-    Description: <input type="text" name="description">
+    Description: <input type="text" name="description" value="<%= @product.description %>">
   </div>
    <div>
     Inventory Status: <select name="inventory_status" id="">
@@ -22,11 +23,11 @@
       <% Supplier.all.each do |supplier| %>
         <option value="<%= supplier.id %>"><%= supplier.name %></option>
       <% end %>
-     <!--  <option value="">--Please choose an option--</option>
+      <!-- <option value="">--Please choose an option--</option>
       <option value="1">Amazon</option>
       <option value="2">Nordstrom</option>
       <option value="3">GAP</option> -->
     </select>
   </div>
-  <input type="submit" value="Create Product">
+  <input type="submit" value="Edit Product">
 </form>
