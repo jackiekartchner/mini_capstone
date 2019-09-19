@@ -17,8 +17,12 @@ class ProductsController < ApplicationController
         inventory_status: params[:inventory_status],
         supplier_id: params[:supplier_id]
       )
-    @product.save
-    redirect_to "/products/#{@product.id}"
+    if @product.save
+      redirect_to "/products/#{@product.id}"
+  else
+    render json: {errors: @product.errors.full_messages},
+      status: :unprocessable_entity
+    end
   end
 
   def show
@@ -31,4 +35,25 @@ class ProductsController < ApplicationController
     render 'edit.html.erb'
   end
 
+  def update
+    @product = Product.find(params[:id])
+    @product.update(
+        name: params[:name],
+        price: params[:price],
+        description: params[:description],
+        inventory_status: params[:inventory_status],
+        supplier_id: params[:supplier_id]
+      )
+    if redirect_to "/products/#{@product.id}"
+    else
+      render json: {errors: @product.errors.full_messages},
+      status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @product = Product.find(params[:id])
+    @product.destroy
+    redirect_to "/products"
+  end
 end

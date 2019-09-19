@@ -1,4 +1,27 @@
-<h1>Products Index</h1>
+<div class="jumbotron">
+  <h1 class="display-4">Hello, shopper!</h1>
+  <p class="lead">This is a simple website to find all the latest trends your heart can possibly desire.</p>
+  <hr class="my-4">
+  <a class="btn btn-primary btn-lg" href="/products" role="button">Home</a>
+</div>
+
+
+
+  <div class="card-columns">
+    <%= @products.each do |product| %>
+    <div class="card">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><%= product.name %></h5>
+        <p class="card-text"><b>Retail Price:</b><%= number_to_currency(product.price) %></p>
+         <p class="card-text"><p><b>Description:</b> <%= product.description %></p>
+        <a href="/products/<%=product.id%>" class="btn btn-primary">More Info</a>
+      </div>
+      <% end %>
+  </div>
+
+
+
 <%= @products.each do |product| %>
   <h2>Product Name: <%= product.name %></h2>
   <!-- <h3>Category: <%= product.cateogry_names %></h3> -->

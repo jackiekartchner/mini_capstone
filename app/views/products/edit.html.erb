@@ -1,6 +1,6 @@
-<h1>Update Product</h1>
+<h1>Edit Product</h1>
 
-<form action="/products/<%= @product.id %>" method="patch">
+<form action="/products/<%= @product.id %>" method="post">
   <input type="hidden" name="_method" value="patch">
   <div>
     Name: <input type="string" name="name" value="<%= @product.name %>">
@@ -31,3 +31,5 @@
   </div>
   <input type="submit" value="Edit Product">
 </form>
+
+ <a href="/products/<%= @product.id %>" data-method="delete">Delete Product</a>
